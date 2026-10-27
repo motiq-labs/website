@@ -85,3 +85,21 @@ html{scroll-padding-top:24px}
 .a .hero { align-items: center; }
 
 .nowrap { white-space: nowrap; }
+
+/* The short page changes surface, rather than adding scroll-only content. */
+.a .service-band { position: relative; isolation: isolate; background: transparent; }
+.a .service-band::before { content: ''; position: absolute; z-index: -1; inset-block: 0; inset-inline: calc(-1 * var(--service-bleed, 0px)); border-radius: var(--service-radius, 15px); background: var(--forest); pointer-events: none; }
+.footer-contact { display: inline-flex; align-items: baseline; flex-wrap: wrap; gap: 14px; }
+.copy-email { border: 0; border-bottom: 1px solid #cbd6c6; padding: 0 0 2px; background: none; color: var(--muted); font: inherit; cursor: pointer; }
+.copy-email:hover { color: var(--forest); border-color: var(--forest); }
+.copy-email:focus-visible { outline: 3px solid #58815b; outline-offset: 5px; }
+.copy-status { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) {
+  .a .service-band::before { inset-inline: 0; border-radius: 15px; }
+}
+.transition-tool { position: absolute; z-index: 1; top: -38px; right: 40px; width: 60px; height: 60px; overflow: visible; transform-origin: 35% 80%; transform: rotate(var(--tool-turn, -12deg)); }
+.hoe-handle { fill: none; stroke: var(--forest); stroke-width: 3; stroke-linecap: round; }
+.hoe-blade { fill: var(--sage); stroke: var(--forest); stroke-width: 2.5; stroke-linejoin: round; }
+@media (max-width: 540px) { .transition-tool { right: 24px; width: 50px; height: 50px; top: -32px; } }
+@media (prefers-reduced-motion: reduce) { .transition-tool { transform: none; } }
+.copy-email { min-height: 28px; padding-block: 4px; }
