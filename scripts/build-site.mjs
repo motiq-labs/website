@@ -6,9 +6,14 @@ const css = await readFile(new URL("../css/style.css", import.meta.url));
 const hash = createHash("sha256").update(css).digest("hex").slice(0, 12);
 const stylesheet = `css/style.${hash}.css`;
 await writeFile(new URL(`../${stylesheet}`, import.meta.url), css);
+const motion = await readFile(new URL("../js/motion.js", import.meta.url));
+const motionHash = createHash("sha256").update(motion).digest("hex").slice(0, 12);
+const motionAsset = `js/motion.${motionHash}.js`;
+await writeFile(new URL(`../${motionAsset}`, import.meta.url), motion);
 for (const [source, output] of [["site", "index"], ["ai-boost", "ai-boost"]]) {
   const template = await readFile(new URL(`../src/${source}.html`, import.meta.url), "utf8");
-  const page = template.replaceAll("{{asset:css/style.css}}", stylesheet);
+  const page = template.replaceAll("{{asset:css/style.css}}", stylesheet)
+    .replaceAll("{{asset:js/motion.js}}", motionAsset);
   if (/\{\{[^}]+\}\}/.test(page)) throw new Error(`Unresolved template key in ${source}`);
   await writeFile(new URL(`../${output}.html`, import.meta.url), page);
   console.log(`Built ${output}.html`);
