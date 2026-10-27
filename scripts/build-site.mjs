@@ -1,56 +1,19 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
-const template = await readFile(
-  new URL("../src/site.html", import.meta.url),
-  "utf8",
-);
-const exports = new Map();
-for (const source of [
-  "css/tokens.css",
-  "css/style.css",
-  "js/theme.js",
-  "js/main.js",
-]) {
-  const content = await readFile(new URL("../" + source, import.meta.url));
-  const hash = createHash("sha256").update(content).digest("hex").slice(0, 12);
-  const target = source.replace(/\.(css|js)$/, `.${hash}.$1`);
-  exports.set(source, target);
-  await writeFile(new URL("../" + target, import.meta.url), content);
+
+// Keep a content-hashed stylesheet so cached pages retain their matching styles.
+const css = await readFile(new URL("../css/style.css", import.meta.url));
+const hash = createHash("sha256").update(css).digest("hex").slice(0, 12);
+const stylesheet = `css/style.${hash}.css`;
+await writeFile(new URL(`../${stylesheet}`, import.meta.url), css);
+for (const [source, output] of [["site", "index"], ["ai-boost", "ai-boost"]]) {
+  const template = await readFile(new URL(`../src/${source}.html`, import.meta.url), "utf8");
+  const page = template.replaceAll("{{asset:css/style.css}}", stylesheet);
+  if (/\{\{[^}]+\}\}/.test(page)) throw new Error(`Unresolved template key in ${source}`);
+  await writeFile(new URL(`../${output}.html`, import.meta.url), page);
+  console.log(`Built ${output}.html`);
 }
-let keys;
-for (const lang of ["en", "hr"]) {
-  const strings = JSON.parse(
-    await readFile(new URL(`../locales/${lang}.json`, import.meta.url), "utf8"),
-  );
-  const currentKeys = Object.keys(strings).sort().join("\n");
-  if (keys && currentKeys !== keys)
-    throw new Error("English and Croatian translation keys differ");
-  keys = currentKeys;
-  const escape = (value) =>
-    String(value).replace(
-      /[&<>"']/g,
-      (c) =>
-        ({
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          '"': "&quot;",
-          "'": "&#39;",
-        })[c],
-    );
-  const html = template.replace(/\{\{([^}]+)\}\}/g, (_, key) => {
-    if (key.startsWith("asset:")) {
-      const path = exports.get(key.slice(6));
-      if (!path) throw new Error(`Unknown asset: ${key}`);
-      return path;
-    }
-    if (key.startsWith("current:"))
-      return key === `current:${lang}` ? 'aria-current="page"' : "";
-    if (!(key in strings))
-      throw new Error(`Missing ${lang} translation: ${key}`);
-    return escape(strings[key]);
-  });
-  const filename = lang === "en" ? "index.html" : "hr.html";
-  await writeFile(new URL("../" + filename, import.meta.url), html);
-  console.log(`Built ${filename}`);
-}
+// Older Croatian links still open the English site; there is no language selector.
+await writeFile(new URL("../hr.html", import.meta.url), `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="refresh" content="0;url=./"><link rel="canonical" href="https://www.motiq.hr/"><meta name="robots" content="noindex,follow"><title>Motiq Labs</title></head><body><p><a href="./">Continue to Motiq Labs</a></p></body></html>\n`);
+console.log("Built legacy hr.html redirect");

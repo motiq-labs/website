@@ -5,34 +5,24 @@
 
 # Motiq Labs website
 
-Website and canonical brand assets for [Motiq Labs](https://www.motiq.hr), an engineering team in Zagreb working on robotics, computer vision, automation software and infrastructure.
-
-English: `index.html`. Croatian: `hr.html`. GitHub Pages publishes the root of `master` to **www.motiq.hr**. The same generated pages are also used in the connected Sites preview. Keep both destinations in sync; edit this repository rather than creating a separate copy of the site.
+English website for [Motiq Labs](https://www.motiq.hr): robotics, AI, DevOps and engineering consulting. GitHub Pages publishes the root of `master` to **www.motiq.hr**.
 
 ## Edit and build
 
-Edit `src/site.html`, `locales/en.json`, `locales/hr.json`, `css/tokens.css` and `css/style.css`. Run `npm run build` to validate translation keys and regenerate both entry pages and their content-hashed assets. Commit the source and generated output together. Historical hashed assets are retained for cached pages.
+Edit `src/site.html` (homepage), `src/ai-boost.html` (existing project overview) and `css/style.css`. Run `npm run build` to regenerate the public pages and their content-hashed stylesheet. Commit the sources and generated output together. Historical hashed assets are retained for cached pages.
 
-For a local preview, run `python3 -m http.server 8766 --bind 127.0.0.1`. Check both languages, light/dark themes, keyboard navigation and narrow screens.
+For a local preview, run `python3 -m http.server 8766 --bind 127.0.0.1`. Check desktop and mobile layouts, links and keyboard focus. The previous `hr.html` URL redirects to the English homepage. The site has no language selector, contact form, tracking or runtime JavaScript. Contact links open the visitor's email application.
 
-The robot scenes are illustrative, with motion off by default and an explicit play/pause control. Reduced-motion preferences are respected. Project descriptions distinguish prototypes and research from completed deployments. The document assistant is an illustrative example. The contact form prepares an email in the visitor's app; the visitor reviews and sends it.
+`locales/`, `css/tokens.css` and the old JavaScript files are retained for historical reference and cached pages; the current build does not load them.
 
 ## Brand assets
 
-`assets/brand/master.json` contains the approved M + gripper geometry and the outlined, centered **Labs** subtitle approved on 15 October 2026. No font installation is required to render the logo. See [the brand guide](assets/brand/README.md).
+The approved Motiq Labs logo is unchanged. `assets/brand/master.json` contains the canonical M + gripper geometry and centered outlined Labs subtitle. See [the brand guide](assets/brand/README.md). Run `npm ci` and `npm run brand:build` to regenerate the brand exports when needed.
 
-Run `npm ci` and `npm run brand:build` to regenerate SVG, PNG, icons and the social preview. `BRAND_NODE_MODULES` can select an existing Node module directory containing Sharp. Commit the master, generator and exports together. Small square icons use the M symbol without the subtitle.
+## AI-BOOST acknowledgement
 
-Obsolete standalone design drafts are not included in the current public tree.
+The homepage retains a brief acknowledgement and links to the existing agricultural robotics project overview. Prototype development and validation remain ongoing; the copy does not claim a completed deployment or final competition victory.
 
-## Planned AI agent
+`assets/brand/ai-boost-horizontal.jpg` is an unmodified official horizontal logo variant from the October 2026 AI Challenge Competition Winners Kit and links to https://aiboost-project.eu/. The EU funding emblem is the existing official English asset. The disclaimer reproduces the kit's GA 101135737 wording. This acknowledgement is not a claim that Motiq has received a payment.
 
-The AI agent section is a product announcement, marked “In preparation” / “U pripremi”. The listed capabilities are a planned focus, not a claim of an available product. No launch date, trial access or membership of a startup program is claimed. The separate document-assistant example remains illustrative. Update these states when the prototype has been validated.
-
-The compact portfolio lists UNIJA NOVA and Apartmani Dubravko, as supplied by the owner. The apartment logo is the supplied Logo2024 image. No project outcomes or endorsements are asserted.
-
-The UNIJA NOVA portfolio uses official color and white logo variants from unija-nova.hr (retrieved 15 October 2026), with proportions preserved and local files used for reliable loading.
-
-## AI-BOOST attribution
-
-The EU funding acknowledgement is scoped to the AI-BOOST programme (Horizon Europe, GA 101135737), not a statement that Motiq has received payment. Official PNG funding statements are unmodified files from the European Commission download centre: https://ec.europa.eu/regional_policy/information-sources/logo-download-center_en. Programme facts: https://cordis.europa.eu/project/id/101135737. Communication statement: 2026 AI-BOOST applicant guidelines, section 6.3 (PDF page 35).
+A new launch article, LinkedIn announcement and submission of publication links are separate follow-up work; this redesign does not publish those announcements.
