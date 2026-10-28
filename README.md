@@ -21,7 +21,7 @@ The approved Motiq Labs logo is unchanged. `assets/brand/master.json` contains t
 
 ## AI-BOOST acknowledgement
 
-The homepage retains a brief acknowledgement and links to the Spark-selection news article. The article uses the supplied official Challenge 1 visual, with the original proportions preserved. Prototype development and validation remain ongoing; the copy does not claim a completed deployment or final competition victory.
+The homepage retains a brief acknowledgement and links to the Spark-selection news article at `https://www.motiq.hr/ai-boost`. GitHub Pages serves the underlying `ai-boost.html` at this extensionless URL; canonical and Open Graph URLs use the clean address, while older `.html` links remain valid. The article uses the supplied official Challenge 1 visual, with the original proportions preserved. Prototype development and validation remain ongoing; the copy does not claim a completed deployment or final competition victory.
 
 `assets/brand/ai-boost-horizontal.jpg` is an unmodified official horizontal logo variant from the October 2026 AI Challenge Competition Winners Kit and links to https://aiboost-project.eu/. The EU funding emblem is the existing official English asset. The disclaimer reproduces the kit's GA 101135737 wording. This acknowledgement is not a claim that Motiq has received a payment.
 
