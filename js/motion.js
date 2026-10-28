@@ -6,7 +6,7 @@
   let frame;
   const paint = () => {
     frame = undefined;
-    if (preference.matches) {
+    if (preference.matches || document.documentElement.dataset.motionPaused === "true") {
       surface.style.removeProperty('--service-bleed');
       surface.style.removeProperty('--service-radius');
       surface.style.removeProperty('--tool-turn');
@@ -25,6 +25,7 @@
   };
   addEventListener('scroll', schedule, { passive: true });
   addEventListener('resize', schedule);
+  addEventListener('motiq:motionchange', schedule);
   preference.addEventListener('change', schedule);
   document.fonts?.ready.then(schedule);
   paint();
@@ -51,4 +52,31 @@
       status.textContent = '';
     }, 3000);
   });
+})();
+
+
+(() => {
+  const story = document.querySelector('[data-name-story]');
+  const button = document.querySelector('[data-motion-toggle]');
+  if (!story || !button) return;
+  const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let paused = false;
+  const sync = () => {
+    button.hidden = preference.matches;
+    document.documentElement.dataset.motionPaused = String(paused || preference.matches);
+    button.textContent = paused ? 'Resume motion' : 'Pause motion';
+    dispatchEvent(new Event('motiq:motionchange'));
+  };
+  button.addEventListener('click', () => { paused = !paused; sync(); });
+  preference.addEventListener('change', sync);
+  document.addEventListener('click', event => {
+    if (story.open && !story.contains(event.target)) story.open = false;
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && story.open) {
+      story.open = false;
+      story.querySelector('summary').focus();
+    }
+  });
+  sync();
 })();
