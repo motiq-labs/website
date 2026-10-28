@@ -44,48 +44,40 @@ html{scroll-padding-top:24px}
 @media (prefers-reduced-motion: reduce) {
   .a .service-band::before { inset-inline: 0; border-radius: 15px; }
 }
-.transition-tool { position: absolute; z-index: 1; top: -38px; right: 40px; width: 60px; height: 60px; overflow: visible; transform-origin: 35% 80%; transform: rotate(var(--tool-turn, -12deg)); }
-.hoe-handle { fill: none; stroke: var(--forest); stroke-width: 3; stroke-linecap: round; }
-.hoe-blade { fill: var(--sage); stroke: var(--forest); stroke-width: 2.5; stroke-linejoin: round; }
-@media (max-width: 540px) { .transition-tool { right: 24px; width: 50px; height: 50px; top: -32px; } }
-@media (prefers-reduced-motion: reduce) { .transition-tool { transform: none; } }
+/* A quiet humanoid behind the foreground hoe, on the existing green surface. */
 .copy-email { min-height: 28px; padding-block: 4px; }
-
-/* Three working strokes, then a short rest. */
-.name-story { position: absolute; z-index: 3; top: -38px; right: 40px; width: 60px; height: 60px; }
-.name-story summary { display: block; width: 60px; height: 60px; list-style: none; cursor: pointer; border-radius: 8px; }
+.name-story { position: absolute; z-index: 3; top: -125.73px; right: 24px; width: 184px; height: 138px; }
+.name-story summary { display: block; width: 100%; height: 100%; list-style: none; cursor: pointer; border-radius: 8px; -webkit-tap-highlight-color: transparent; }
 .name-story summary::-webkit-details-marker { display: none; }
 .name-story summary:focus-visible { outline: 3px solid #819b70; outline-offset: 4px; }
-.name-story .transition-tool { position: static; display: block; width: 60px; height: 60px; transform-origin: 70% 20%; animation: hoe-work 3.2s linear infinite; }
-.name-story[open] .transition-tool, :root[data-motion-paused="true"] .transition-tool { animation-play-state: paused; }
-.name-note { position: absolute; top: 59px; right: 0; width: 270px; max-width: calc(100vw - 64px); padding: 19px 21px; background: #fff; color: var(--ink); border: 1px solid #dce2da; border-radius: 10px; box-shadow: 0 10px 30px #1e3a2e18; font-size: 14px; }
+.digging-scene { width: 100%; height: 100%; display: block; overflow: visible; }
+.field-marks { stroke: #6d8976; stroke-width: 1.4; }
+.robot-limb { fill: none; stroke: #aab9ae; stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; }
+.robot-back { stroke: #c4cfc6; }
+.robot-foot { stroke-width: 6; }
+.robot-shell { fill: #e9efea; stroke: #93a799; stroke-width: 2; stroke-linejoin: round; }
+.robot-neck { fill: none; stroke: #aab9ae; stroke-width: 8; }
+.robot-panel { fill: none; stroke: #bccabe; stroke-width: 2; stroke-linecap: round; }
+.robot-visor { fill: none; stroke: #6e8876; stroke-width: 3; stroke-linecap: round; }
+.robot-ear { fill: none; stroke: #aab9ae; stroke-width: 2; stroke-linecap: round; }
+.robot-joint { fill: #d4dfd6; stroke: #9eb0a2; stroke-width: 2; }
+.hoe-handle { fill: none; stroke: var(--forest); stroke-width: 4.5; stroke-linecap: round; }
+.hoe-grain { fill: none; stroke: #829775; stroke-width: 1.1; stroke-linecap: round; }
+.hoe-blade { fill: var(--sage); stroke: var(--forest); stroke-width: 2.8; stroke-linejoin: round; }
+.hoe-edge { fill: none; stroke: #839a72; stroke-width: 1.2; stroke-linecap: round; }
+.robot-grips { fill: #d7e4c6; stroke: var(--forest); stroke-width: 1.4; }
+.earth-particles { color: #789366; opacity: 0; }
+.name-note { position: absolute; top: 145px; right: 0; width: 270px; max-width: calc(100vw - 64px); padding: 19px 21px; background: #fff; color: var(--ink); border: 1px solid #dce2da; border-radius: 10px; box-shadow: 0 10px 30px #1e3a2e18; font-size: 14px; }
 .name-note p { color: var(--ink); line-height: 1.55; }
 .name-note .name-proverb { margin-top: 14px; color: var(--forest); }
 .name-proverb span { display: block; margin-top: 3px; font-size: 12px; color: var(--muted); }
 .motion-toggle { border: 0; border-bottom: 1px solid #cbd6c6; padding: 4px 0; min-height: 28px; background: none; font: inherit; color: var(--muted); cursor: pointer; }
 .motion-toggle:hover { color: var(--forest); border-color: var(--forest); }
 .motion-toggle:focus-visible { outline: 3px solid #58815b; outline-offset: 5px; }
-@keyframes hoe-work {
-  0%, 20%, 38%, 60%, 100% {
-    transform: rotate(calc(var(--tool-turn, -12deg) + 26deg)) translate(0, -2px);
-    animation-timing-function: cubic-bezier(.55, 0, .95, .55);
-  }
-  8%, 26%, 44% {
-    transform: rotate(calc(var(--tool-turn, -12deg) - 18deg)) translate(0, 3px);
-    animation-timing-function: ease-out;
-  }
-  10%, 28%, 46% {
-    transform: rotate(calc(var(--tool-turn, -12deg) - 20deg)) translate(-2px, 4px);
-    animation-timing-function: ease-out;
-  }
-  15%, 33%, 51% {
-    transform: rotate(calc(var(--tool-turn, -12deg) - 12deg)) translate(-5px, 3px);
-    animation-timing-function: ease-in-out;
-  }
-}
+@media (min-width: 851px) { .a .hero { padding-bottom: 144px; } }
+@media (max-width: 850px) { .a .hero { padding-bottom: 143px; } }
 @media (max-width: 540px) {
-  .name-story { right: 24px; top: -32px; width: 50px; height: 50px; }
-  .name-story summary, .name-story .transition-tool { width: 50px; height: 50px; }
-  .name-note { top: 50px; right: -3px; }
+  .name-story { width: 154px; height: 115.5px; top: -105.23px; right: 10px; }
+  .name-note { top: 123px; right: 0; }
+  .a .hero { padding-bottom: 124px; }
 }
-@media (prefers-reduced-motion: reduce) { .name-story .transition-tool { animation: none; transform: none; } }
