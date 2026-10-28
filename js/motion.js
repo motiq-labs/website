@@ -1,34 +1,3 @@
-// Open one green surface as the visitor scrolls; keep native page scrolling.
-(() => {
-  const surface = document.querySelector('.service-band');
-  if (!surface) return;
-  const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let frame;
-  const paint = () => {
-    frame = undefined;
-    if (preference.matches || document.documentElement.dataset.motionPaused === "true") {
-      surface.style.removeProperty('--service-bleed');
-      surface.style.removeProperty('--service-radius');
-      return;
-    }
-    const bounds = surface.getBoundingClientRect();
-    const maximumScroll = Math.max(0, document.documentElement.scrollHeight - innerHeight);
-    const distance = Math.min(maximumScroll, Math.max(120, bounds.top + scrollY - innerHeight * .28));
-    const progress = distance > 0 ? Math.min(1, Math.max(0, scrollY / distance)) : 0;
-    surface.style.setProperty('--service-bleed', `${(bounds.left * progress).toFixed(2)}px`);
-    surface.style.setProperty('--service-radius', `${(15 * (1 - progress)).toFixed(2)}px`);
-  };
-  const schedule = () => {
-    if (frame === undefined) frame = requestAnimationFrame(paint);
-  };
-  addEventListener('scroll', schedule, { passive: true });
-  addEventListener('resize', schedule);
-  addEventListener('motiq:motionchange', schedule);
-  preference.addEventListener('change', schedule);
-  document.fonts?.ready.then(schedule);
-  paint();
-})();
-
 (() => {
   const button = document.querySelector('[data-copy-email]');
   if (!button || !navigator.clipboard?.writeText) return;
